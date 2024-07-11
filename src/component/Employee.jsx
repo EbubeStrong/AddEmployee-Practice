@@ -1,5 +1,5 @@
 import React from "react";
-import EditEmployeee from "./EditEmployee";
+import EditEmployee from "./EditEmployee";
 
 const Employee = (props) => {
   return (
@@ -35,14 +35,17 @@ const Employee = (props) => {
             <p className="text-slate-500 font-medium">{props.role}</p>
           </div>
 
-          <EditEmployeee
-            id={props.id}
-            name={props.name}
-            role={props.role}
-            image={props.img}
-            updateEmployee={props.updateEmployee}
-            removeEmployee={props.removeEmployee}
-          />
+          {/* <EditEmployee
+                id={props.id}
+                name={props.name}
+                role={props.role}
+                image={props.img}
+                updateEmployee={props.updateEmployee}
+                removeEmployee={props.removeEmployee}
+              /> */}
+
+              {props.EditEmployee}
+
         </div>
       </div>
     </>

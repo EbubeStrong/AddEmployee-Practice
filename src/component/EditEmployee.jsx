@@ -6,7 +6,7 @@ function EditEmployee(props) {
   const [show, setShow] = useState(false);
   const [inputName, setInputName] = useState(props.name || '');
   const [inputRole, setInputRole] = useState(props.role || '');
-  const [inputImg, setInputImg] = useState(props.image || '');
+  const [inputImg, setInputImg] = useState(props.image || 'https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -100,7 +100,7 @@ function EditEmployee(props) {
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                   id="image"
                   type="text"
-                  value={inputImg}
+                  value= {inputImg}
                   onChange={changeImage}
                 />
               </div>

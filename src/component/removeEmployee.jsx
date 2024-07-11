@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const RemoveEmployee = (props) => {
   const handleRemove = () => {
@@ -14,6 +14,5 @@ const RemoveEmployee = (props) => {
     </button>
   );
 };
-
 
 export default RemoveEmployee;

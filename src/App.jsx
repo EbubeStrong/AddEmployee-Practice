@@ -1,13 +1,17 @@
 import "./App.css";
-import { useState } from "react";
-import Employee from "./component/Employee.jsx";
+import { useState, useEffect } from "react";
 import React from "react";
-import {v4 as uuid4} from "uuid"
-import AddEmployeee from "./component/AddEmployee.jsx";
+import { v4 as uuid4 } from "uuid";
+import Employee from "./component/Employee.jsx";
+import EditEmployee from "./component/EditEmployee.jsx";
+import AddEmployee from "./component/AddEmployee.jsx";
 
 function App() {
   const [role, setRole] = useState("dev");
-  const [employees, setEmployees] = useState([
+  const [employees, setEmployees] = useState( () => { 
+    const savedEmployees = localStorage.getItem("employees")
+    return savedEmployees ? JSON.parse(savedEmployees) :
+    [
     {
       id: uuid4(),
       name: "Samuel",
@@ -18,7 +22,7 @@ function App() {
       id: uuid4(),
       name: "Chidinma",
       role: "Designer",
-      image: "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg",
+      image: "https://images.pexels.com/photos/2625122/pexels-photo-2625122.jpeg",
     },
     {
       id: uuid4(),
@@ -44,29 +48,34 @@ function App() {
       role: "Junior Dev",
       image: "https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg",
     },
-  ]);
+  ]
+});
+
+  useEffect(() => {
+    localStorage.setItem("employees", JSON.stringify(employees));
+  }, [employees]);
   // console.log('We are about to list the employees')
 
   const updateEmployee = (id, newName, newRole, newImage) => {
     // console.log("Employee is updated")
     const updatedEmployees = employees.map((employee) => {
-      if(id === employee.id){
-        return  {...employee, name: newName, role: newRole, image: newImage}
+      if (id === employee.id) {
+        return { ...employee, name: newName, role: newRole, image: newImage };
       }
-      return employee
-    })
-    setEmployees(updatedEmployees)
-  }
+      return employee;
+    });
+    setEmployees(updatedEmployees);
+  };
 
   const addNewEmployee = (addName, addRole, addImg) => {
     const newEmployee = {
       id: uuid4(),
       name: addName,
       role: addRole,
-      image: addImg, 
-    }
-    setEmployees([...employees, newEmployee])
-  }
+      image: addImg,
+    };
+    setEmployees([...employees, newEmployee]);
+  };
 
   const removeEmployee = (id) => {
     const updatedEmployees = employees.filter((employee) => employee.id !== id);
@@ -89,15 +98,25 @@ function App() {
           <div className="flex flex-wrap justify-center">
             {employees.map((employee) => {
               // console.log(employee.id)
+
+              const editEmployee = (
+              <EditEmployee 
+              id={employee.id}
+              name={employee.name}
+              role={employee.role}
+              image={employee.img}
+              updateEmployee={updateEmployee}
+              removeEmployee={removeEmployee}
+              />
+            );
               return (
                 <Employee
-                  key={employee.id} 
+                  key={employee.id}
                   id={employee.id}
                   name={employee.name}
                   role={employee.role}
                   image={employee.image}
-                  updateEmployee={updateEmployee}
-                  removeEmployee={removeEmployee}
+                  EditEmployee={editEmployee}
                 />
               );
             })}
@@ -163,7 +182,7 @@ function App() {
             /> */}
           </div>
 
-          <AddEmployeee newEmployee={addNewEmployee}/>
+          <AddEmployee newEmployee={addNewEmployee} />
         </>
       ) : (
         <p>User doesn't exist</p>
